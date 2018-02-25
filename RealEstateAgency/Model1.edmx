@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RealEstateAgencyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblAdressRoom">
+          <Key>
+            <PropertyRef Name="RoomId" />
+            <PropertyRef Name="CitiesId" />
+            <PropertyRef Name="DistrictsId" />
+            <PropertyRef Name="StreetId" />
+          </Key>
+          <Property Name="RoomId" Type="int" Nullable="false" />
+          <Property Name="CitiesId" Type="int" Nullable="false" />
+          <Property Name="DistrictsId" Type="int" Nullable="false" />
+          <Property Name="StreetId" Type="int" Nullable="false" />
+          <Property Name="NumberHouse" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblCities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblDistricts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CitiesId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblRoomImages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" Nullable="false" />
+          <Property Name="RoomId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblRooms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Floor" Type="int" Nullable="false" />
+          <Property Name="CountRooms" Type="int" Nullable="false" />
+          <Property Name="Square" Type="decimal" Precision="3" Scale="2" Nullable="false" />
+          <Property Name="Reserved" Type="bit" Nullable="false" />
+          <Property Name="Sales" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblStreets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="DistrictsId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblAdressRoom_tblCities">
+          <End Role="tblCities" Type="Self.tblCities" Multiplicity="1" />
+          <End Role="tblAdressRoom" Type="Self.tblAdressRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblAdressRoom">
+              <PropertyRef Name="CitiesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAdressRoom_tblDistricts">
+          <End Role="tblDistricts" Type="Self.tblDistricts" Multiplicity="1" />
+          <End Role="tblAdressRoom" Type="Self.tblAdressRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDistricts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblAdressRoom">
+              <PropertyRef Name="DistrictsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAdressRoom_tblRooms">
+          <End Role="tblRooms" Type="Self.tblRooms" Multiplicity="1" />
+          <End Role="tblAdressRoom" Type="Self.tblAdressRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRooms">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblAdressRoom">
+              <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAdressRoom_tblStreets">
+          <End Role="tblStreets" Type="Self.tblStreets" Multiplicity="1" />
+          <End Role="tblAdressRoom" Type="Self.tblAdressRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStreets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblAdressRoom">
+              <PropertyRef Name="StreetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDistricts_tblCities">
+          <End Role="tblCities" Type="Self.tblCities" Multiplicity="1" />
+          <End Role="tblDistricts" Type="Self.tblDistricts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblDistricts">
+              <PropertyRef Name="CitiesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblRoomImages_tblRooms">
+          <End Role="tblRooms" Type="Self.tblRooms" Multiplicity="1" />
+          <End Role="tblRoomImages" Type="Self.tblRoomImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRooms">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblRoomImages">
+              <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblStreets_tblDistricts">
+          <End Role="tblDistricts" Type="Self.tblDistricts" Multiplicity="1" />
+          <End Role="tblStreets" Type="Self.tblStreets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDistricts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblStreets">
+              <PropertyRef Name="DistrictsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RealEstateAgencyModelStoreContainer">
+          <EntitySet Name="tblAdressRoom" EntityType="Self.tblAdressRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCities" EntityType="Self.tblCities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDistricts" EntityType="Self.tblDistricts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRoomImages" EntityType="Self.tblRoomImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRooms" EntityType="Self.tblRooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStreets" EntityType="Self.tblStreets" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblAdressRoom_tblCities" Association="Self.FK_tblAdressRoom_tblCities">
+            <End Role="tblCities" EntitySet="tblCities" />
+            <End Role="tblAdressRoom" EntitySet="tblAdressRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAdressRoom_tblDistricts" Association="Self.FK_tblAdressRoom_tblDistricts">
+            <End Role="tblDistricts" EntitySet="tblDistricts" />
+            <End Role="tblAdressRoom" EntitySet="tblAdressRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAdressRoom_tblRooms" Association="Self.FK_tblAdressRoom_tblRooms">
+            <End Role="tblRooms" EntitySet="tblRooms" />
+            <End Role="tblAdressRoom" EntitySet="tblAdressRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAdressRoom_tblStreets" Association="Self.FK_tblAdressRoom_tblStreets">
+            <End Role="tblStreets" EntitySet="tblStreets" />
+            <End Role="tblAdressRoom" EntitySet="tblAdressRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDistricts_tblCities" Association="Self.FK_tblDistricts_tblCities">
+            <End Role="tblCities" EntitySet="tblCities" />
+            <End Role="tblDistricts" EntitySet="tblDistricts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblRoomImages_tblRooms" Association="Self.FK_tblRoomImages_tblRooms">
+            <End Role="tblRooms" EntitySet="tblRooms" />
+            <End Role="tblRoomImages" EntitySet="tblRoomImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblStreets_tblDistricts" Association="Self.FK_tblStreets_tblDistricts">
+            <End Role="tblDistricts" EntitySet="tblDistricts" />
+            <End Role="tblStreets" EntitySet="tblStreets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RealEstateAgencyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblAdressRoom">
+          <Key>
+            <PropertyRef Name="RoomId" />
+            <PropertyRef Name="CitiesId" />
+            <PropertyRef Name="DistrictsId" />
+            <PropertyRef Name="StreetId" />
+          </Key>
+          <Property Name="RoomId" Type="Int32" Nullable="false" />
+          <Property Name="CitiesId" Type="Int32" Nullable="false" />
+          <Property Name="DistrictsId" Type="Int32" Nullable="false" />
+          <Property Name="StreetId" Type="Int32" Nullable="false" />
+          <Property Name="NumberHouse" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblCities" Relationship="Self.FK_tblAdressRoom_tblCities" FromRole="tblAdressRoom" ToRole="tblCities" />
+          <NavigationProperty Name="tblDistricts" Relationship="Self.FK_tblAdressRoom_tblDistricts" FromRole="tblAdressRoom" ToRole="tblDistricts" />
+          <NavigationProperty Name="tblRooms" Relationship="Self.FK_tblAdressRoom_tblRooms" FromRole="tblAdressRoom" ToRole="tblRooms" />
+          <NavigationProperty Name="tblStreets" Relationship="Self.FK_tblAdressRoom_tblStreets" FromRole="tblAdressRoom" ToRole="tblStreets" />
+        </EntityType>
+        <EntityType Name="tblCities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblAdressRoom" Relationship="Self.FK_tblAdressRoom_tblCities" FromRole="tblCities" ToRole="tblAdressRoom" />
+          <NavigationProperty Name="tblDistricts" Relationship="Self.FK_tblDistricts_tblCities" FromRole="tblCities" ToRole="tblDistricts" />
+        </EntityType>
+        <EntityType Name="tblDistricts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CitiesId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblAdressRoom" Relationship="Self.FK_tblAdressRoom_tblDistricts" FromRole="tblDistricts" ToRole="tblAdressRoom" />
+          <NavigationProperty Name="tblCities" Relationship="Self.FK_tblDistricts_tblCities" FromRole="tblDistricts" ToRole="tblCities" />
+          <NavigationProperty Name="tblStreets" Relationship="Self.FK_tblStreets_tblDistricts" FromRole="tblDistricts" ToRole="tblStreets" />
+        </EntityType>
+        <EntityType Name="tblRoomImages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="RoomId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblRooms" Relationship="Self.FK_tblRoomImages_tblRooms" FromRole="tblRoomImages" ToRole="tblRooms" />
+        </EntityType>
+        <EntityType Name="tblRooms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Floor" Type="Int32" Nullable="false" />
+          <Property Name="CountRooms" Type="Int32" Nullable="false" />
+          <Property Name="Square" Type="Decimal" Precision="3" Scale="2" Nullable="false" />
+          <Property Name="Reserved" Type="Boolean" Nullable="false" />
+          <Property Name="Sales" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblAdressRoom" Relationship="Self.FK_tblAdressRoom_tblRooms" FromRole="tblRooms" ToRole="tblAdressRoom" />
+          <NavigationProperty Name="tblRoomImages" Relationship="Self.FK_tblRoomImages_tblRooms" FromRole="tblRooms" ToRole="tblRoomImages" />
+        </EntityType>
+        <EntityType Name="tblStreets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DistrictsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblAdressRoom" Relationship="Self.FK_tblAdressRoom_tblStreets" FromRole="tblStreets" ToRole="tblAdressRoom" />
+          <NavigationProperty Name="tblDistricts" Relationship="Self.FK_tblStreets_tblDistricts" FromRole="tblStreets" ToRole="tblDistricts" />
+        </EntityType>
+        <Association Name="FK_tblAdressRoom_tblCities">
+          <End Role="tblCities" Type="Self.tblCities" Multiplicity="1" />
+          <End Role="tblAdressRoom" Type="Self.tblAdressRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblAdressRoom">
+              <PropertyRef Name="CitiesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAdressRoom_tblDistricts">
+          <End Role="tblDistricts" Type="Self.tblDistricts" Multiplicity="1" />
+          <End Role="tblAdressRoom" Type="Self.tblAdressRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDistricts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblAdressRoom">
+              <PropertyRef Name="DistrictsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAdressRoom_tblRooms">
+          <End Role="tblRooms" Type="Self.tblRooms" Multiplicity="1" />
+          <End Role="tblAdressRoom" Type="Self.tblAdressRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRooms">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblAdressRoom">
+              <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAdressRoom_tblStreets">
+          <End Role="tblStreets" Type="Self.tblStreets" Multiplicity="1" />
+          <End Role="tblAdressRoom" Type="Self.tblAdressRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStreets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblAdressRoom">
+              <PropertyRef Name="StreetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDistricts_tblCities">
+          <End Role="tblCities" Type="Self.tblCities" Multiplicity="1" />
+          <End Role="tblDistricts" Type="Self.tblDistricts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblDistricts">
+              <PropertyRef Name="CitiesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblStreets_tblDistricts">
+          <End Role="tblDistricts" Type="Self.tblDistricts" Multiplicity="1" />
+          <End Role="tblStreets" Type="Self.tblStreets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDistricts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblStreets">
+              <PropertyRef Name="DistrictsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblRoomImages_tblRooms">
+          <End Role="tblRooms" Type="Self.tblRooms" Multiplicity="1" />
+          <End Role="tblRoomImages" Type="Self.tblRoomImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRooms">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblRoomImages">
+              <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MyContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblAdressRoom" EntityType="Self.tblAdressRoom" />
+          <EntitySet Name="tblCities" EntityType="Self.tblCities" />
+          <EntitySet Name="tblDistricts" EntityType="Self.tblDistricts" />
+          <EntitySet Name="tblRoomImages" EntityType="Self.tblRoomImages" />
+          <EntitySet Name="tblRooms" EntityType="Self.tblRooms" />
+          <EntitySet Name="tblStreets" EntityType="Self.tblStreets" />
+          <AssociationSet Name="FK_tblAdressRoom_tblCities" Association="Self.FK_tblAdressRoom_tblCities">
+            <End Role="tblCities" EntitySet="tblCities" />
+            <End Role="tblAdressRoom" EntitySet="tblAdressRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAdressRoom_tblDistricts" Association="Self.FK_tblAdressRoom_tblDistricts">
+            <End Role="tblDistricts" EntitySet="tblDistricts" />
+            <End Role="tblAdressRoom" EntitySet="tblAdressRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAdressRoom_tblRooms" Association="Self.FK_tblAdressRoom_tblRooms">
+            <End Role="tblRooms" EntitySet="tblRooms" />
+            <End Role="tblAdressRoom" EntitySet="tblAdressRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAdressRoom_tblStreets" Association="Self.FK_tblAdressRoom_tblStreets">
+            <End Role="tblStreets" EntitySet="tblStreets" />
+            <End Role="tblAdressRoom" EntitySet="tblAdressRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDistricts_tblCities" Association="Self.FK_tblDistricts_tblCities">
+            <End Role="tblCities" EntitySet="tblCities" />
+            <End Role="tblDistricts" EntitySet="tblDistricts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblStreets_tblDistricts" Association="Self.FK_tblStreets_tblDistricts">
+            <End Role="tblDistricts" EntitySet="tblDistricts" />
+            <End Role="tblStreets" EntitySet="tblStreets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblRoomImages_tblRooms" Association="Self.FK_tblRoomImages_tblRooms">
+            <End Role="tblRooms" EntitySet="tblRooms" />
+            <End Role="tblRoomImages" EntitySet="tblRoomImages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RealEstateAgencyModelStoreContainer" CdmEntityContainer="MyContext">
+          <EntitySetMapping Name="tblAdressRoom">
+            <EntityTypeMapping TypeName="RealEstateAgencyModel.tblAdressRoom">
+              <MappingFragment StoreEntitySet="tblAdressRoom">
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="CitiesId" ColumnName="CitiesId" />
+                <ScalarProperty Name="DistrictsId" ColumnName="DistrictsId" />
+                <ScalarProperty Name="StreetId" ColumnName="StreetId" />
+                <ScalarProperty Name="NumberHouse" ColumnName="NumberHouse" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCities">
+            <EntityTypeMapping TypeName="RealEstateAgencyModel.tblCities">
+              <MappingFragment StoreEntitySet="tblCities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDistricts">
+            <EntityTypeMapping TypeName="RealEstateAgencyModel.tblDistricts">
+              <MappingFragment StoreEntitySet="tblDistricts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CitiesId" ColumnName="CitiesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRoomImages">
+            <EntityTypeMapping TypeName="RealEstateAgencyModel.tblRoomImages">
+              <MappingFragment StoreEntitySet="tblRoomImages">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRooms">
+            <EntityTypeMapping TypeName="RealEstateAgencyModel.tblRooms">
+              <MappingFragment StoreEntitySet="tblRooms">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="CountRooms" ColumnName="CountRooms" />
+                <ScalarProperty Name="Square" ColumnName="Square" />
+                <ScalarProperty Name="Reserved" ColumnName="Reserved" />
+                <ScalarProperty Name="Sales" ColumnName="Sales" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStreets">
+            <EntityTypeMapping TypeName="RealEstateAgencyModel.tblStreets">
+              <MappingFragment StoreEntitySet="tblStreets">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DistrictsId" ColumnName="DistrictsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
